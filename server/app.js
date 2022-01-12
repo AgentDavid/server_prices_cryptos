@@ -105,6 +105,13 @@ const main = async () => {
                 console.log(arrCrypto[i]);
             }
         };
+
+        //Paso 1  usar simple/prices
+        //Paso 2 encontrar los id de los symbols (1 sola vez)
+        //Paso 3 ordenar los precios, que sean en el mismo orden que en crypto_price.py (chequear update_slot_1/2/3/4)
+        //Paso 4 convertirlos a enteros agregando 6 ceros
+        //Paso 5 crear los arrays del tipo:
+
         // [
         //     new Uint8Array(Buffer.from('update_slot_1')),
         //     new Uint8Array(Buffer.from(convertPrice(data.bitcoin.usd))),// btc 47000000000
@@ -119,6 +126,7 @@ const main = async () => {
         // ];
         // [
         //     new Uint8Array(Buffer.from('update_slot_2')),
+        //     ...
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
@@ -130,6 +138,7 @@ const main = async () => {
         // ];
         // [
         //     new Uint8Array(Buffer.from('update_slot_3')),
+        //     ...
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
@@ -140,6 +149,7 @@ const main = async () => {
         // ],
         // [
         //     new Uint8Array(Buffer.from('update_slot_4')),
+        //     ...
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
         //     new Uint8Array(Buffer.from(47000)),
