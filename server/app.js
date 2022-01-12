@@ -10,7 +10,7 @@ const coingeckoApi =
     'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=75&page=1&sparkline=false';
 
 const update_slot_1 = [
-    'btc',
+    'bitcoin', //btc
     'eth',
     'bnb',
     'sol',
@@ -105,12 +105,48 @@ const main = async () => {
                 console.log(arrCrypto[i]);
             }
         };
-        const txn1 = algosdk.makeApplicationNoOpTxn(
-            wallet_creator.addr,
-            params,
-            182182812,
-            [],
-        );
+        // [
+        //     new Uint8Array(Buffer.from('update_slot_1')),
+        //     new Uint8Array(Buffer.from(convertPrice(data.bitcoin.usd))),// btc 47000000000
+        //     new Uint8Array(Buffer.from(47000)), //eth 3500000000
+        //     new Uint8Array(Buffer.from(47000)), 300000
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        // ];
+        // [
+        //     new Uint8Array(Buffer.from('update_slot_2')),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        // ];
+        // [
+        //     new Uint8Array(Buffer.from('update_slot_3')),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        // ],
+        // [
+        //     new Uint8Array(Buffer.from('update_slot_4')),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        //     new Uint8Array(Buffer.from(47000)),
+        // ],
     }, 4000); // Tiempo que se tarda en actualizar el server
 };
 
