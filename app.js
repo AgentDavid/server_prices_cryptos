@@ -1,6 +1,6 @@
 const fetch = require('cross-fetch');
 
-//setInterval(() => {
+setInterval(() => {
     console.clear()
     let urlSite = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false' // URL de la API
 
@@ -29,6 +29,6 @@ const fetch = require('cross-fetch');
         }
     
     }
-//}, 4000); // Tiempo que se tarda en actualizar el server
+}, 4000); // Tiempo que se tarda en actualizar el server
 
 
