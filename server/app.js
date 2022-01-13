@@ -6,79 +6,78 @@ const wallet_creator = algosdk.mnemonicToSecretKey(dataParse.mnemonic);
 
 const server = 'https://testnet.algoexplorerapi.io';
 const algoClient = new algosdk.Algodv2('', server, '');
-const coingeckoApi =
-    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=75&page=1&sparkline=false';
+const coingeckoApi = ('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,cardano,rippler,terra-luna, polkadot,avalanche-2,dogecoin,shiba-inu,matic-network,crypto-com-chain,wrapped-bitcoin,uniswap,litecoin,chainlink,algorand,bitcoin-cash,near,tron,stellar,decentraland,axie-infinity,cosmos,vechain,ftx-token,fantom,the-sandbox,filehedera-hashgraph,bitcoin-bep2,theta-token,elrond-erd-2,internet-computer,ethereum-claiota,tezos,helium,monero,aave,leo-token,klay-token,gala,the-graph,eos,pancakeswap-token,blockstack,flow,loopring,harmony,bittorrent-2,kusama,maker,enjincoin,bitcoin-cash-sv,quant-network,amp-token,kadena,ecash&vs_currencies=usd');
 
 const update_slot_1 = [
     'bitcoin', //btc
-    'eth',
-    'bnb',
-    'sol',
-    'ada',
-    'xrp',
-    'luna',
-    'dot',
-    'avax',
-    'doge',
-    'shib',
-    'matic',
-    'cro',
-    'wbtc',
-    'uni',
+    'ethereum', //eth
+    'binancecoin', //bnb
+    'solana', //sol
+    'cardano', //ada
+    'rippler', //xrp
+    'terra-luna', //luna
+    'polkadot', //dot
+    'avalanche-2', //avax
+    'dogecoin', //doge
+    'shiba-inu', //shib
+    'matic-network', //matic
+    'crypto-com-chain', //cro
+    'wrapped-bitcoin', //wbtc
+    'uniswap', //uni
 ];
 
 const update_slot_2 = [
-    'ltc',
-    'link',
-    'algo',
-    'bch',
-    'near',
-    'trx',
-    'xml',
-    'mana',
-    'axs',
-    'atom',
-    'vet',
-    'ftt',
-    'ftm',
-    'sand',
-    'fil',
+    'litecoin', //ltc
+    'chainlink', //link
+    'algorand', //algo
+    'bitcoin-cash', //bch
+    'near', //near
+    'tron', //trx
+    'stellar', //xml
+    'decentraland', //mana
+    'axie-infinity', //axs
+    'cosmos', //atom
+    'vechain', //vet
+    'ftx-token', //ftt
+    'fantom', //ftm
+    'the-sandbox', //sand
+    'filecoin', //fil
 ];
 
 const update_slot_3 = [
-    'hbar',
-    'btcb',
-    'theta',
-    'egld',
-    'icp',
-    'etc',
-    'miota',
-    'xtz',
-    'hnt',
-    'xmr',
-    'aave',
-    'leo',
-    'klay',
-    'gala',
-    'grt',
+    'hedera-hashgraph', //hbar
+    'bitcoin-bep2', //btcb
+    'theta-token', //theta
+    'elrond-erd-2', //egld
+    'internet-computer', //icp
+    'ethereum-classic',
+    'iota', //miota
+    'tezos', //xtz
+    'helium', //hnt
+    'monero', //xmr
+    'aave', //aave
+    'leo-token', //leo
+    'klay-token', //klay
+    'gala', //gala
+    'the-graph', //gtr
 ];
 
 const update_slot_4 = [
-    'eos',
-    'cake',
-    'stx',
-    'flow',
-    'lrc',
-    'one',
-    'btt',
-    'ksm',
-    'mkr',
-    'enj',
-    'bsv',
-    'qnt',
-    'amp',
-    'kda',
-    'xec',
+    'eos', //eos
+    'pancakeswap-token', //cake
+    'blockstack', //stx
+    'flow', //flow
+    'loopring', //lrc
+    'harmony', //one
+    'bittorrent-2', //btt
+    'kusama', //ksm
+    'maker', //kmr
+    'enjincoin', //enj
+    'bitcoin-cash-sv', //bsv
+    'quant-network', //qnt
+    'amp-token', //amp
+    'kadena', //kda
+    'ecash', //xec
 ];
 
 const main = async () => {
@@ -88,75 +87,91 @@ const main = async () => {
         // Get data from coingecko's API
         fetch(coingeckoApi)
             .then((response) => response.json())
-            .then((data) => mostrarData(data))
+            .then((data) => getData(data))
             .catch((e) => console.log(e));
 
-        // Funcion encargada de mostrar y procesar la data
-        const mostrarData = (data) => {
-            let arrCrypto = [];
+const getData = (data) => {
 
-            for (let i = 0; i < data.length; i++) {
-                const symbol = data[i].symbol;
-                const price = data[i].current_price;
-                arrCrypto.push(symbol + ' | ' + price);
-            }
+    [
+        new Uint8Array(Buffer.from('update_slot_1')),
+        
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[0]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[1]].usd * 1000000))), 
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[2]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[3]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[4]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[5]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[6]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[7]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[8]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[9]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[10]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[11]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[12]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[13]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_1[14]].usd * 1000000)))
+    ],
+    [
+        new Uint8Array(Buffer.from('update_slot_2')),
+    
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[0]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[1]].usd * 1000000))), 
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[2]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[3]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[4]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[5]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[6]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[7]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[8]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[9]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[10]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[11]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[12]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[13]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_2[14]].usd * 1000000)))
+    ],
+    [
+        new Uint8Array(Buffer.from('update_slot_3')),
+        
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[0]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[1]].usd * 1000000))), 
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[2]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[3]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[4]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[5]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[6]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[7]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[8]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[9]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[10]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[11]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[12]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[13]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_3[14]].usd * 1000000)))
+    ],
+    [
+        new Uint8Array(Buffer.from('update_slot_4')),
+        
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[0]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[1]].usd * 1000000))), 
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[2]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[3]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[4]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[5]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[6]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[7]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[8]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[9]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[10]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[11]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[12]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[13]].usd * 1000000))),
+        new Uint8Array(Buffer.from(Math.trunc(data[update_slot_4[14]].usd * 1000000)))
+    ];
 
-            for (let i = 0; i < arrCrypto.length; i++) {
-                console.log(arrCrypto[i]);
-            }
-        };
+}
 
-        //Paso 1  usar simple/prices
-        //Paso 2 encontrar los id de los symbols (1 sola vez)
-        //Paso 3 ordenar los precios, que sean en el mismo orden que en crypto_price.py (chequear update_slot_1/2/3/4)
-        //Paso 4 convertirlos a enteros agregando 6 ceros
-        //Paso 5 crear los arrays del tipo:
 
-        // [
-        //     new Uint8Array(Buffer.from('update_slot_1')),
-        //     new Uint8Array(Buffer.from(convertPrice(data.bitcoin.usd))),// btc 47000000000
-        //     new Uint8Array(Buffer.from(47000)), //eth 3500000000
-        //     new Uint8Array(Buffer.from(47000)), 300000
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        // ];
-        // [
-        //     new Uint8Array(Buffer.from('update_slot_2')),
-        //     ...
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        // ];
-        // [
-        //     new Uint8Array(Buffer.from('update_slot_3')),
-        //     ...
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        // ],
-        // [
-        //     new Uint8Array(Buffer.from('update_slot_4')),
-        //     ...
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        //     new Uint8Array(Buffer.from(47000)),
-        // ],
     }, 4000); // Tiempo que se tarda en actualizar el server
 };
 
