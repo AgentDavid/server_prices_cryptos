@@ -6,34 +6,17 @@ const dataParse = JSON.parse(fs.readFileSync('wallet_creator.json').toString());
 
 const { addr, sk } = algosdk.mnemonicToSecretKey(dataParse.mnemonic);
 
+const app_id = 59400639;
 const server = 'https://testnet.algoexplorerapi.io';
 const algoClient = new algosdk.Algodv2('', server, '');
 const coingeckoApi =
     'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ethereum-classic,iota,binancecoin,solana,cardano,ripple,terra-luna,polkadot,avalanche-2,dogecoin,shiba-inu,matic-network,crypto-com-chain,wrapped-bitcoin,uniswap,litecoin,chainlink,algorand,bitcoin-cash,near,tron,stellar,decentraland,axie-infinity,cosmos,vechain,ftx-token,fantom,the-sandbox,filecoin,hedera-hashgraph,bitcoin-bep2,theta-token,elrond-erd-2,internet-computer,ethereum-claiota,tezos,helium,monero,aave,leo-token,klay-token,gala,the-graph,eos,pancakeswap-token,blockstack,flow,loopring,harmony,bittorrent-2,kusama,maker,enjincoin,bitcoin-cash-sv,quant-network,amp-token,kadena,ecash&vs_currencies=usd';
 
-const update_slot_4 = [
-    'eos', //eos
-    'pancakeswap-token', //cake
-    'blockstack', //stx
-    'flow', //flow
-    'loopring', //lrc
-    'harmony', //one
-    'bittorrent-2', //btt
-    'kusama', //ksm
-    'maker', //kmr
-    'enjincoin', //enj
-    'bitcoin-cash-sv', //bsv
-    'quant-network', //qnt
-    'amp-token', //amp
-    'kadena', //kda
-    'ecash', //xec
-];
-
 const main = async () => {
     // setInterval(() => {
     const getData = async (data) => {
         const params = await algoClient.getTransactionParams().do();
-        const tx1 = algosdk.makeApplicationNoOpTxn(addr, params, 59400639, [
+        const tx1 = algosdk.makeApplicationNoOpTxn(addr, params, app_id, [
             new Uint8Array(Buffer.from('update_slot_1')),
             new Uint8Array([Math.trunc(data['bitcoin'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['ethereum'].usd * 1000000)]),
@@ -51,7 +34,7 @@ const main = async () => {
             new Uint8Array([Math.trunc(data['wrapped-bitcoin'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['uniswap'].usd * 1000000)]),
         ]);
-        const tx2 = algosdk.makeApplicationNoOpTxn(addr, params, 59400639, [
+        const tx2 = algosdk.makeApplicationNoOpTxn(addr, params, app_id, [
             new Uint8Array(Buffer.from('update_slot_2')),
             new Uint8Array([Math.trunc(data['litecoin'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['chainlink'].usd * 1000000)]),
@@ -69,7 +52,7 @@ const main = async () => {
             new Uint8Array([Math.trunc(data['the-sandbox'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['filecoin'].usd * 1000000)]),
         ]);
-        const tx3 = algosdk.makeApplicationNoOpTxn(addr, params, 59400639, [
+        const tx3 = algosdk.makeApplicationNoOpTxn(addr, params, app_id, [
             new Uint8Array(Buffer.from('update_slot_3')),
 
             new Uint8Array([Math.trunc(data['hedera-hashgraph'].usd * 1000000)]),
@@ -88,7 +71,7 @@ const main = async () => {
             new Uint8Array([Math.trunc(data['gala'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['the-graph'].usd * 1000000)]),
         ]);
-        const tx4 = algosdk.makeApplicationNoOpTxn(addr, params, 59400639, [
+        const tx4 = algosdk.makeApplicationNoOpTxn(addr, params, app_id, [
             new Uint8Array(Buffer.from('update_slot_4')),
             new Uint8Array([Math.trunc(data['eos'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['pancakeswap-token'].usd * 1000000)]),
@@ -106,8 +89,16 @@ const main = async () => {
             new Uint8Array([Math.trunc(data['kadena'].usd * 1000000)]),
             new Uint8Array([Math.trunc(data['ecash'].usd * 1000000)]),
         ]);
-        const tx = algoClient.sendRawTransaction([tx1.signTxn(sk), tx2.signTxn(sk), tx3.signTxn(sk), tx4.signTxn(sk)]);
-        console.log('tx send: ' + tx.id);
+        const txGroup = algosdk.assignGroupID([tx1, tx2, tx3, tx4]);
+        const txn = await algoClient
+            .sendRawTransaction([
+                txGroup[0].signTxn(sk),
+                txGroup[1].signTxn(sk),
+                txGroup[2].signTxn(sk),
+                txGroup[3].signTxn(sk),
+            ])
+            .do();
+        console.log(txn);
     };
     // Get data from coingecko's API
     fetch(coingeckoApi)
