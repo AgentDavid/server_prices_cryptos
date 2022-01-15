@@ -1,1 +1,12 @@
 node_modules/
+.venv
+.env
+server/.env
+.env.local
+.env.development
+__pycache__/
+.idea
+.vs-code
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
