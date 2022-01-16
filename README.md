@@ -10,6 +10,8 @@ npm i && npm start
 
 ## Using the data in another smartcontract
 
+Pyteal code:
+
 ```
 App.globalGetEx(Int(APP_ID), Bytes('CRYPTO_SYMBOL'))
 App.globalGetEx(Int(62242014), Bytes('BTC'))
