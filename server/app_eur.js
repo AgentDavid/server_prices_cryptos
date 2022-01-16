@@ -6,12 +6,12 @@ dotenv.config();
 
 const { addr, sk } = algosdk.mnemonicToSecretKey(process.env.WALLET_CREATOR);
 
-const app_id = parseInt(process.env.APP_ID);
+const app_id = parseInt(process.env.APP_ID_EUR);
 const million = 1000000;
 const server = process.env.ALGOEXPLORER_API;
 const algoClient = new algosdk.Algodv2('', server, '');
 const coingeckoApi =
-    'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ethereum-classic,iota,binancecoin,solana,cardano,ripple,terra-luna,polkadot,avalanche-2,dogecoin,shiba-inu,matic-network,crypto-com-chain,wrapped-bitcoin,uniswap,litecoin,chainlink,algorand,bitcoin-cash,near,tron,stellar,decentraland,axie-infinity,cosmos,vechain,ftx-token,fantom,the-sandbox,filecoin,hedera-hashgraph,bitcoin-bep2,theta-token,elrond-erd-2,internet-computer,ethereum-claiota,tezos,helium,monero,aave,leo-token,klay-token,gala,the-graph,eos,pancakeswap-token,blockstack,flow,loopring,harmony,bittorrent-2,kusama,maker,enjincoin,bitcoin-cash-sv,quant-network,amp-token,kadena,ecash&vs_currencies=usd';
+    'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ethereum-classic,iota,binancecoin,solana,cardano,ripple,terra-luna,polkadot,avalanche-2,dogecoin,shiba-inu,matic-network,crypto-com-chain,wrapped-bitcoin,uniswap,litecoin,chainlink,algorand,bitcoin-cash,near,tron,stellar,decentraland,axie-infinity,cosmos,vechain,ftx-token,fantom,the-sandbox,filecoin,hedera-hashgraph,bitcoin-bep2,theta-token,elrond-erd-2,internet-computer,ethereum-claiota,tezos,helium,monero,aave,leo-token,klay-token,gala,the-graph,eos,pancakeswap-token,blockstack,flow,loopring,harmony,bittorrent-2,kusama,maker,enjincoin,bitcoin-cash-sv,quant-network,amp-token,kadena,ecash&vs_currencies=eur';
 
 const waitForConfirmation = async (algodClient, txId, timeout) => {
     if (algodClient == null || txId == null || timeout < 0) {
@@ -130,8 +130,9 @@ const getData = async (data) => {
             txGroup[3].signTxn(sk),
         ])
         .do();
+    console.log('tx send: ' + txn.txId);
     const txResolve = await waitForConfirmation(algoClient, txn.txId, 5);
-    console.log('tx in round: ' + txResolve);
+    console.log('tx confirmed in round: ' + txResolve);
     main();
     return;
 };
@@ -141,7 +142,11 @@ const main = async () => {
     fetch(coingeckoApi)
         .then((response) => response.json())
         .then((data) => {
-            getData(data);
+            if (data) {
+                getData(data);
+            } else {
+                throw new Error('Undefined received from coingeko');
+            }
         })
         .catch((e) => console.log(e));
 };
