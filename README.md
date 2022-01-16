@@ -21,11 +21,11 @@ It must be remembered that the smart contract only admits integers, so 6-zeroes 
 
 We have 3 smart contracts on the test network, one priced in USD, the other in EUR and GBP. The app.js file is the demo to update the prices in USD, to change to another currency you just have to change the vs_currencies parameter to the desired currency (For example "https://....&vs_currencies=eur")
 
-### APP_ID_USD=62242014
+-   APP_ID_USD 62242014
 
-### APP_ID_EUR=62242137
+-   APP_ID_EUR 62242137
 
-### APP_ID_GBP=62242291
+-   APP_ID_GBP 62242291
 
 Crypto prices currently supported:
 
