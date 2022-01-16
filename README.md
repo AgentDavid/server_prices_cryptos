@@ -26,7 +26,9 @@ We have 3 smart contracts on the test network, one priced in USD, the other in E
 ### APP_ID_GBP=62242291
 
 Crypto prices currently supported:
-symbol = name
+
+```
+symbol / name
 BTC = bitcoin
 ETH = ethereum
 BNB = binancecoin
@@ -87,6 +89,8 @@ QNT = quant-network
 AMP = amp-token
 KDA = kadena
 XEC = ecash
+
+```
 
 ## Using the data with AlgoClient (a free solution for development)
 
