@@ -1,7 +1,9 @@
-# Notas
+# Notes
 
-Recuerden que deben ejecutar.
+To run the script to automatically update the smartcontract prices
+
 ```
-npm install
+npm i && npm start
 ```
-para reconstruir los modulos de Node
+
+To deploy the smartcontract check the smartcontract\deploy.ipynb file in Jupiter Notebook

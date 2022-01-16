@@ -1,15 +1,14 @@
 const fetch = require('cross-fetch');
 const algosdk = require('algosdk');
 const { encodeUint64 } = require('algosdk');
-const fs = require('fs');
+const dotenv = require('dotenv');
+dotenv.config();
 
-const dataParse = JSON.parse(fs.readFileSync('wallet_creator.json').toString());
+const { addr, sk } = algosdk.mnemonicToSecretKey(process.env.WALLET_CREATOR);
 
-const { addr, sk } = algosdk.mnemonicToSecretKey(dataParse.mnemonic);
-
-const app_id = 59420257;
+const app_id = parseInt(process.env.APP_ID);
 const million = 1000000;
-const server = 'https://testnet.algoexplorerapi.io';
+const server = process.env.ALGOEXPLORER_API;
 const algoClient = new algosdk.Algodv2('', server, '');
 const coingeckoApi =
     'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ethereum-classic,iota,binancecoin,solana,cardano,ripple,terra-luna,polkadot,avalanche-2,dogecoin,shiba-inu,matic-network,crypto-com-chain,wrapped-bitcoin,uniswap,litecoin,chainlink,algorand,bitcoin-cash,near,tron,stellar,decentraland,axie-infinity,cosmos,vechain,ftx-token,fantom,the-sandbox,filecoin,hedera-hashgraph,bitcoin-bep2,theta-token,elrond-erd-2,internet-computer,ethereum-claiota,tezos,helium,monero,aave,leo-token,klay-token,gala,the-graph,eos,pancakeswap-token,blockstack,flow,loopring,harmony,bittorrent-2,kusama,maker,enjincoin,bitcoin-cash-sv,quant-network,amp-token,kadena,ecash&vs_currencies=usd';
